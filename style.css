@@ -1,0 +1,47 @@
+/* Style the pong game container */
+#pong-game {
+    width: 800px;
+    height: 400px;
+    background-color: black;
+    position: relative;
+  }
+  
+  /* Style the ball */
+  #ball {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+  
+  /* Style the paddles */
+  #paddle-left, #paddle-right {
+    width: 20px;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #paddle-left {
+    left: 20px;
+  }
+  
+  #paddle-right {
+    right: 20px;
+  }
+  
+  /* Style the scoreboard */
+  #scoreboard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-size: 24px;
+  }
+  
