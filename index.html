@@ -1,10 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pong Game</title>
+  <style>
+    #pong-game {
+      width: 800px;
+      height: 400px;
+      background-color: black;
+      position: relative;
+    }
+
+    #ball {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    #paddle-left, #paddle-right {
+      width: 20px;
+      height: 100px;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    #paddle-left {
+      left: 20px;
+    }
+
+    #paddle-right {
+      right: 20px;
+    }
+
+    #scoreboard {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-size: 24px;
+    }
+
+    #audio-paddle-hit {
+      display: none;
+    }
+
+    #audio-wall-hit {
+      display: none;
+    }
+  </style>
 </head>
-<body>
-    <div id="pong-game
+<body onload="startGame()">
+  <div id="pong-game">
+    <div id="ball"></div>
+    <div id="paddle-left"></div>
+    <div id="paddle-right"></div>
+    <div id="scoreboard"></div>
+  </div>
+
+  <audio id="audio-paddle-hit" src="paddle_hit.mp3"></audio>
+  <audio id="audio-wall-hit" src="wall_hit.mp3"></audio>
+
+  <script>
+    const ballElement = document.getElementById('ball');
+    const paddleLeftElement = document.getElementById('paddle-left');
+    const paddleRightElement = document.getElementById('paddle-right');
+    const scoreboardElement = document.getElementById('scoreboard');
+    const audioElementPaddleHit = document.getElementById('audio-paddle-hit');
+    const audioElementWallHit = document.getElementById('audio-wall-hit');
+
+    let ballX = 0;
+    let ballY = 0;
+    let ballXDirection = 1;
+    let ballYDirection = 1;
+
+    let paddleLeftY = 0;
+    let paddleRightY = 0;
+
+    let player1Score = 0;
+    let player2Score = 0;
+
+    const ballSpeed = 5;
+    const paddleSpeed = 10;
+
+    const playPaddleHitSound = () => {
+      audioElementPaddleHit.play();
+    };
+
+    const playWallHitSound = () => {
+      audioElementWallHit.play();
+    };
+
+    function startGame() {
+      setInterval(update, 10);
+    }
+
+    function update() {
+      // Update ball position
+      ballX += ballXDirection * ballSpeed;
+      ballY += ballYDirection * ballSpeed;
+
+      // Check for collisions with walls
+      if (ballY < 0 || ballY > 400 - ballElement.offsetHeight) {
+        ballYDirection *= -1;
+        playWallHitSound();
+      }
+
+      // Check for collisions with paddles
+      if (ballX < paddleLeftElement.offsetLeft + paddleLeftElement.offsetWidth &&
+        ballY > paddleLeftElement.offsetTop &&
+        ballY < paddleLeftElement.offsetTop + paddleLeftElement.offsetHeight) {
+        ballXDirection *= -1;
+        playPaddleHitSound();
+      } else if (ballX > paddleRightElement.offsetLeft - ballElement.offsetWidth &&
+        ballY > paddleRightElement.offsetTop &&
+        ballY < paddleRightElement.offsetTop + paddleRightElement.offsetHeight) {
+        ballXDirection *= -1;
+        playPaddleHitSound();
+      }
+    }
