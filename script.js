@@ -1,42 +1,30 @@
-// Get references to the DOM elements
-const ballElement = document.getElementById('ball');
-const paddleLeftElement = document.getElementById('paddle-left');
-const paddleRightElement = document.getElementById('paddle-right');
-const scoreboardElement = document.getElementById('scoreboard');
-const playButtonElement = document.getElementById('play-button');
+document.addEventListener("DOMContentLoaded", function () {
+  const startButton = document.getElementById("startButton");
+  const leftPaddle = document.getElementById("leftPaddle");
+  const rightPaddle = document.getElementById("rightPaddle");
+  const ball = document.querySelector(".ball");
 
-// Initialize game variables
-let ballX = 0;
-let ballY = 0;
-let ballXDirection = 1;
-let ballYDirection = 1;
+  let gameStarted = false;
 
-let paddleLeftY = 0;
-let paddleRightY = 0;
+  function handleKeyDown(event) {
+      if (gameStarted) {
+          if (event.key === "w" && parseInt(leftPaddle.style.top) > 0) {
+              leftPaddle.style.top = parseInt(leftPaddle.style.top) - 10 + "px";
+          } else if (event.key === "s" && parseInt(leftPaddle.style.top) < 320) {
+              leftPaddle.style.top = parseInt(leftPaddle.style.top) + 10 + "px";
+          } else if (event.key === "o" && parseInt(rightPaddle.style.top) > 0) {
+              rightPaddle.style.top = parseInt(rightPaddle.style.top) - 10 + "px";
+          } else if (event.key === "l" && parseInt(rightPaddle.style.top) < 320) {
+              rightPaddle.style.top = parseInt(rightPaddle.style.top) + 10 + "px";
+          }
+      }
+  }
 
-let player1Score = 0;
-let player2Score = 0;
+  function startGame() {
+      gameStarted = true;
+      startButton.disabled = true;
+      document.addEventListener("keydown", handleKeyDown);
+  }
 
-const ballSpeed = 5;
-const paddleSpeed = 10;
-
-// Function to play paddle hit sound
-const playPaddleHitSound = () => {
-  const audioElement = document.getElementById('audio-paddle-hit');
-  audioElement.play();
-};
-
-// Function to play wall hit sound
-const playWallHitSound = () => {
-  const audioElement = document.getElementById('audio-wall-hit');
-  audioElement.play();
-};
-
-// Function to update the game state
-const update = () => {
-  // Update ball position
-  ballX += ballXDirection * ballSpeed;
-  ballY += ballYDirection * ballSpeed;
-
-  // Check for collisions with walls
-  if (ballY < 0 || ballY > 400 - ballElement.
+  startButton.addEventListener("click", startGame);
+});

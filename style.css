@@ -1,47 +1,49 @@
-/* Style the pong game container */
-#pong-game {
-    width: 800px;
-    height: 400px;
-    background-color: black;
-    position: relative;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+}
+
+#pongGame {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  background-color: black;
+  border: 2px solid white;
+}
+
+.paddle {
+  position: absolute;
+  width: 10px;
+  height: 80px;
+  background-color: white;
+}
+
+#leftPaddle {
+  left: 10px;
+}
+
+#rightPaddle {
+  right: 10px;
+}
+
+.ball {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  animation: moveBall linear infinite;
+}
+
+@keyframes moveBall {
+  0%, 100% {
+      transform: translate(-50%, -50%) translate(2px, 2px);
   }
-  
-  /* Style the ball */
-  #ball {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
+  50% {
+      transform: translate(-50%, -50%) translate(-2px, -2px);
   }
-  
-  /* Style the paddles */
-  #paddle-left, #paddle-right {
-    width: 20px;
-    height: 100px;
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  #paddle-left {
-    left: 20px;
-  }
-  
-  #paddle-right {
-    right: 20px;
-  }
-  
-  /* Style the scoreboard */
-  #scoreboard {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    font-size: 24px;
-  }
-  
+}
